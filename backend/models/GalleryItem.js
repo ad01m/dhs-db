@@ -1,0 +1,1 @@
+import mongoose from 'mongoose';export default mongoose.model('GalleryItem',new mongoose.Schema({imageUrl:{type:String,required:true,trim:true,maxlength:300},caption:{type:String,trim:true,maxlength:240},published:{type:Boolean,default:true}},{timestamps:true}));

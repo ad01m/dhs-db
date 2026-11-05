@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { submitAdmission, listAdmissions, updateAdmissionStatus, deleteAdmission } from "../controllers/admissionController.js";
+import { protect, allowRoles } from "../middleware/authMiddleware.js";
+import { rateLimit } from "../middleware/rateLimit.js";
+const router = Router();
+router.post("/", rateLimit({ windowMs: 15 * 60 * 1000, max: 10, message: "Too many admission enquiries from this connection. Please try again in 15 minutes." }), submitAdmission);
+router.get("/", protect, allowRoles("admin"), listAdmissions);
+router.patch("/:id/status", protect, allowRoles("admin"), updateAdmissionStatus);
+router.delete("/:id", protect, allowRoles("admin"), deleteAdmission);
+export default router;
